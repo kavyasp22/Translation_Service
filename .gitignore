@@ -25,3 +25,9 @@ indictrans_server/venv/
 
 claude/
 .claude/
+
+# Local documentation and Claude files
+CLAUDE.md
+DEPLOYMENT.md
+MODEL_ROUTING_EXPLAINER.md
+documents/
