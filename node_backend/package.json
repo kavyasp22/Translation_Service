@@ -1,0 +1,8 @@
+{
+  "name": "translation-node-backend",
+  "version": "1.0.0",
+  "description": "Node helper used by the Python service to call the unofficial googletrans scraper",
+  "dependencies": {
+    "googletrans": "^1.0.29"
+  }
+}

@@ -1,0 +1,32 @@
+/data/kavya/Translation-Service/translation_service/indictrans_server/app.py:75: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+INFO:     Started server process [3228772]
+INFO:     Waiting for application startup.
+INFO:indictrans2:Loading ai4bharat/indictrans2-indic-en-1B on cuda ...
+INFO:indictrans2:IndicTrans2 model loaded and ready.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8200 (Press CTRL+C to quit)
+INFO:     127.0.0.1:41142 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.25.0.3:36772 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.25.0.3:54786 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.25.0.3:38642 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.25.0.3:33592 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.25.0.3:55064 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.25.0.3:48082 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.25.0.3:58242 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.25.0.3:41876 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.25.0.3:41876 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.25.0.3:41876 - "POST /translate HTTP/1.1" 200 OK
+INFO:     172.25.0.3:42526 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.25.0.3:41876 - "POST /translate HTTP/1.1" 200 OK
+INFO:     172.25.0.3:56316 - "GET /health HTTP/1.1" 200 OK
+INFO:     172.25.0.3:37228 - "GET /health HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [3228772]

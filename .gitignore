@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+# Env files (contain API keys - never commit)
+.env
+*.env
+!.env.example
+
+# IndicTrans2 server (separate venv on GPU host)
+indictrans_server/venv/
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
+
+claude/

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -m 5 http://localhost:8048/health)",
+      "Bash(curl -s -m 10 -X POST http://localhost:8048/translate -H \"Content-Type: application/json\" -d '{\"text\":\"नमस्ते\",\"source_lang\":\"hi\",\"target_lang\":\"en\"}')",
+      "Bash(nvidia-smi --query-compute-apps=pid,process_name,used_memory --format=csv)",
+      "Bash(time curl -s -m 20 -X POST http://localhost:8048/translate -H \"Content-Type: application/json\" -d '{\"text\": \"यह एक नया परीक्षण वाक्य है जो कैश में नहीं है।\", \"source_lang\": \"hi\", \"target_lang\": \"en\"}')",
+      "Bash(python3 -m json.tool)"
+    ]
+  }
+}

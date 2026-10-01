@@ -1,0 +1,6 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+torch>=2.1.0
+transformers==4.44.2
+sentencepiece==0.2.0
+IndicTransToolkit @ git+https://github.com/VarunGumma/IndicTransToolkit.git

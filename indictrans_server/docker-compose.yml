@@ -1,0 +1,46 @@
+# IndicTrans2 — Standalone Docker Service
+# Hosted on Chai_Tower (10.10.180.68), shared across all projects
+#
+# Start:   docker compose up -d
+# Stop:    docker compose down
+# Restart: docker compose restart indictrans2
+# Logs:    docker compose logs -f indictrans2
+# Status:  docker ps | grep indictrans2
+
+services:
+  indictrans2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: indictrans2:latest
+    container_name: indictrans2
+    ports:
+      - "8200:8200"
+    volumes:
+      # Weights mounted read-only from host — no re-download ever needed
+      # Model at: ~/.cache/huggingface/hub/models--ai4bharat--indictrans2-indic-en-1B
+      - /home/sherya/.cache/huggingface:/root/.cache/huggingface:ro
+    environment:
+      - TRANSFORMERS_OFFLINE=1
+      - HF_DATASETS_OFFLINE=1
+      - HF_HUB_OFFLINE=1
+      - INDICTRANS_PORT=8200
+      - INDICTRANS_NUM_BEAMS=2
+      - INDICTRANS_BATCH_SIZE=4
+      - PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    # auto-restart on crash or server reboot
+    # stays stopped after an explicit 'docker compose down'
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8200/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

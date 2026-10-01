@@ -1,0 +1,59 @@
+:root {
+  /* Color: dark signal-routing palette - deliberately not the cream/terracotta
+     or pure-black/acid-green defaults. Teal = signal reached its destination,
+     amber = fallback was triggered, coral = a hop failed. */
+  --bg: #0a0d13;
+  --surface: #12161f;
+  --surface-raised: #171c27;
+  --border: #232a38;
+  --text: #e7ebf3;
+  --muted: #7c8699;
+  --accent: #4fd1c5;
+  --accent-dim: #2a5a56;
+  --warn: #f2b84b;
+  --danger: #f2647a;
+
+  --font-display: "IBM Plex Mono", "SF Mono", monospace;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent-dim);
+  color: var(--text);
+}
+
+a {
+  color: var(--accent);
+}
+
+button {
+  font-family: inherit;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

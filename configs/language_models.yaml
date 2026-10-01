@@ -1,0 +1,57 @@
+# Per-language fallback chains. Keyed by the DETECTED/SOURCE language code
+# (the language the incoming text is written in). Each list is tried in
+# order; the pipeline moves to the next entry on failure/timeout/circuit-
+# breaker-open. This assumes the common case: translating FROM one of these
+# languages INTO English - which matches IndicTrans2's indic-en-1B checkpoint
+# (Indic -> English only, see the limitation note below).
+#
+# This directly encodes the table you gave:
+#   Chinese    -> Gemma, Googletrans, Qwen
+#   Hindi      -> IndicTrans2, Googletrans, Gemma
+#   Manipuri   -> Gemma, IndicTrans2
+#   Punjabi    -> Gemma, IndicTrans2, Qwen, Googletrans
+#   Assamese   -> Gemma, IndicTrans2, Googletrans
+#   Bengali    -> IndicTrans2, Gemma, Googletrans
+#   Nepali     -> IndicTrans2, Gemma, Googletrans
+#   Arabic     -> Gemma, Qwen, Googletrans
+#   Urdu       -> Gemma, Googletrans, IndicTrans2
+#   Pashto/Baluchi/Divehi -> Gemma, Googletrans
+#   Malayalam  -> Gemma, IndicTrans2
+#   Burmese (Myanmar) -> Gemma, Googletrans
+#
+# Burmese needs its own entry rather than relying on the generic script-based
+# fallback: langid (used to auto-detect the source language) misclassifies
+# native Myanmar-script text as Chinese ('zh'), which - since 'zh' has its
+# own entry above - silently routes it through Chinese's chain instead of a
+# real per-language decision. It happened to still translate correctly
+# because Gemma is first in zh's chain too, but that was luck, not routing -
+# if Gemma ever failed, it would fall through to Googletrans mislabeled as
+# Chinese. This entry makes Burmese's own chain explicit instead.
+#
+# IMPORTANT: IndicTrans2 (ai4bharat/indictrans2-indic-en-1B) only translates
+# INDIC -> ENGLISH. It's listed as a fallback for these Indic languages
+# assuming your use case is "Indic text -> English". If you need translation
+# INTO these languages (target = hi/pa/bn/etc, not target = en), IndicTrans2
+# must be removed from that chain until you add the en-indic or indic-indic
+# checkpoints (see indictrans_server/README.md).
+
+language_fallback_chains:
+  zh: [gemma, googletrans, qwen]  # Chinese
+  hi: [indictrans2, googletrans, gemma]      # Hindi
+  mni: [gemma, indictrans2]          # Manipuri
+  pa: [gemma, indictrans2, qwen, googletrans]  # Punjabi
+  as: [gemma, indictrans2, googletrans]      # Assamese
+  bn: [indictrans2, gemma, googletrans]  # Bengali
+  ne: [indictrans2, gemma, googletrans]      # Nepali
+  ar: [gemma, qwen, googletrans]             # Arabic
+  ur: [gemma, googletrans, indictrans2]                   # Urdu
+  ps: [gemma, googletrans]                   # Pashto
+  bal: [gemma, qwen]                  # Baluchi
+  dv: [gemma, googletrans]                   # Divehi
+  ml: [gemma, indictrans2]  # Malayalam
+  my: [gemma, googletrans]  # Burmese (Myanmar)
+
+# Any language NOT listed above falls back to script-based routing between
+# Googletrans and Gemma (see app/pipeline/language_router.py +
+# app/utils/script_detect.py).
+default_chain_uses_script_routing: true
